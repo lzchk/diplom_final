@@ -2,6 +2,8 @@
 /**
  * @var $calendarString Calendar::getMonth string
  */
+use app\models\Calendar;
+use yii\helpers\VarDumper;
 
 require_once ('../models/Schedule.php');
 ?>
@@ -126,6 +128,7 @@ require_once ('../models/Schedule.php');
             <?= $calendarString ?>
         </div>
     </div>
+
             <?=  $this->render('_profile_calendar',[
                 'calendarString' => $calendarString,
                 'schedule' => $schedule,
@@ -135,7 +138,6 @@ require_once ('../models/Schedule.php');
                 'deadlineWork' => $deadlineWork
             ])
             ?>
-
 </div>
 
 <div class="flex-row space-between" style="margin-top: 2.6vw;">

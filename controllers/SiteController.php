@@ -66,12 +66,13 @@ class SiteController extends Controller
         ];
     }
 
-    public function actionSignup(){
+    public function actionSignup()
+    {
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
         $model = new SignupForm();
-        if( $model ->load(Yii::$app->request->post()) && $model->validate()){
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $user = new UserIdentity();
 
 
@@ -79,15 +80,15 @@ class SiteController extends Controller
             $user->password = $model->password;
             $user->save();
             $group = new UserHasGroup();
-            $group->id_user=$user->id;
-            $group->id_group=$model->group_id;
+            $group->id_user = $user->id;
+            $group->id_group = $model->group_id;
             var_dump($group);
             $group->save();
-            VarDumper::dump($user->errors,10,true);
+            VarDumper::dump($user->errors, 10, true);
 
 //            $user ->password = Yii::$app->security->generatePasswordHash($model->password);
-            if($user->save()){
-              Yii::$app->user->login($user);
+            if ($user->save()) {
+                Yii::$app->user->login($user);
 //                 var_dump(  $user->password );
 //
                 return $this->goHome();
@@ -97,9 +98,10 @@ class SiteController extends Controller
 
         }
 
-        return $this->render('signup',['model' => $model]);
+        return $this->render('signup', ['model' => $model]);
 
     }
+
     /**
      * Displays homepage.
      *
@@ -119,11 +121,11 @@ class SiteController extends Controller
     {
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
-        }else{
-           /* запуск проверки сдо*/
-          /*  его данные форму
-            модель сингап
-            передам сохраню*/
+        } else {
+            /* запуск проверки сдо*/
+            /*  его данные форму
+              модель сингап
+              передам сохраню*/
             $model = new LoginForm();
             if ($model->load(Yii::$app->request->post())) {
                 $ch = curl_init();
@@ -145,27 +147,29 @@ class SiteController extends Controller
                     echo '<script>alert("Добро пожаловать")</script>';
                     $user_sdo = new UserIdentity();
 //
-                    if(!UserIdentity::findByUsername($model['username'])){
+                    if (!UserIdentity::findByUsername($model['username'])) {
                         $user_sdo->username = $model['username'];
                         $user_sdo->password = $model->password;
                         $user_sdo->name = $model->name;
                         $user_sdo->save();
                         $group = new UserHasGroup();
-                        $group->id_user=$user_sdo->id;
-                        $group->id_group=$model->group_id;
+                        $group->id_user = $user_sdo->id;
+                        $group->id_group = $model->group_id;
                         $group->save();
                         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-                            return $this->goHome();
+                            return $this->redirect('site/profile');
                         }
-                    }  if ($model->load(Yii::$app->request->post()) && $model->login()) {
-                        return $this->goHome();
+                    }
+                    if ($model->load(Yii::$app->request->post()) && $model->login()) {
+                        return $this->redirect('site/profile');
                     }
                 }
                 curl_close($ch);
             }
         }
 
-       return $this->render('login', [
+
+        return $this->render('login', [
             'model' => $model,
         ]);
     }
@@ -212,7 +216,12 @@ class SiteController extends Controller
 
     public function actionProfile()
     {
-        $schedule = Schedule::find()->where(['speciality_id' => 1] )->andWhere(['date' => new Expression('CURDATE()')])->all();
+        $schedule = Schedule::find()
+            ->where(['speciality_id' => 1])
+            ->andWhere(['date' => new Expression('CURDATE()')])
+            ->orderBy('num_lesson')
+            ->all();
+
         $calendarString = Calendar::getMonth(date('n'), date('Y'), Calendar::$events);
         $monthArr = Calendar::$months;
         $deadlineWork = Work::find()->where('date_by > NOW()')->orderBy("date_by")->one();
@@ -226,7 +235,7 @@ class SiteController extends Controller
             'month' => $monthArr,
             'dayOfTheWeek' => $dayOfTheWeek,
             'dayOfTheMonth' => $dayOfTheMonth,
-            'deadlineWork' => $deadlineWork
+            'deadlineWork' => $deadlineWork,
         ]);
     }
 }

@@ -70,14 +70,15 @@ use yii\helpers\VarDumper;
         </div>
         <div class="schedule_body">
             <?php
-            for ($i=0;$i<5; $i++){
-                $item = $schedule[$i];
-                $num = (($i+1)." пара: ");
-                if (is_null($item)){
-                    echo $num.' - ';
-                    echo ($item->num_lesson).'<br>';
-                } else {
-                    echo '<div class="class flex-row">'.'<div class="flex-row">'.$num.'<div class="disc">'.' '.$item->discipline->name.'</div>'.'</div>'.' '.'<div class="room">'.' '.$item->room->number.'<br>'.'</div>'.'</div>';
+            for ($i=1;$i<=5; $i++){
+                $num = (($i)." пара: ");
+                foreach ($schedule as $lesson){
+                    if ($lesson->num_lesson == $i){
+                        echo '<div class="class flex-row">'.'<div class="flex-row">'.$num.'<div class="disc">'.' '.$lesson->discipline->name.'</div>'.'</div>'.' '.'<div class="room">'.' '.$lesson->room->number.'<br>'.'</div>'.'</div>';
+                    }
+//                    else{
+//                        echo "<br>";
+//                    }
                 }
             }
             ?>
@@ -105,8 +106,8 @@ use yii\helpers\VarDumper;
             4 => '14.50 - 16.20',
             5 => '16.35 – 18.05',
         );
-
-        $course = abs((substr((int)date("Y"),-1)+10) - substr("39-03",1))+1;
+        $course = 4;
+        //$course = abs((substr((int)date("Y"),-1)+10) - substr("39-03",1))+1;
         //    echo $course;
         if (($course == 1)||($course == 2)) {
             $i = 1;

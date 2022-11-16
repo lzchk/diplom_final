@@ -1,25 +1,25 @@
 <?php
 
 /** @var yii\web\View $this */
-/** @var yii\bootstrap4\ActiveForm $form */
+/** @var yii\widgets\ActiveForm $form */
 /** @var app\models\LoginForm $model */
 
-use yii\bootstrap4\ActiveForm;
-use yii\bootstrap4\Html;
+
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 
 
-$this->title = 'Добрый день';
-$this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
+
 
     <p>У вас еще нет аккаунта?</p>     <input class="btn btn-primary" id="click-to-hide-2" type="button" value="Зарегистрироваться">
 
     <?php $form = ActiveForm::begin([
         'id' => 'login-form',
-        'layout' => 'horizontal',
+       // 'layout' => 'horizontal',
         'fieldConfig' => [
             'template' => "{label}\n{input}\n{error}",
             'labelOptions' => ['class' => 'col-lg-1 col-form-label mr-lg-3'],
