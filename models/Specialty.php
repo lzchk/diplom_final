@@ -50,7 +50,7 @@ class Specialty extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => 'Name',
             'number_group' => 'Number Group',
-            'id_department' => 'Id Department',
+            'id_department' => 'Это спец  код подразделения для вывода расписания по времени',
         ];
     }
 

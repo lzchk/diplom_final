@@ -12,24 +12,32 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
+        'assetManager' => [
+            'appendTimestamp' => true,
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => '1lw2NKl3CduwGF68aKNL1HtxQFSRdHNQ',
+            'cookieValidationKey' => '2C3Ln7ahVS2v_SHpp_M6gqR_4zYZ8i60',
+
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
+
             'identityClass' => 'app\models\UserIdentity',
            // 'enableAutoLogin' => true,
+
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
         'mailer' => [
+
             'class' => \yii\symfonymailer\Mailer::class,
             'viewPath' => '@app/mail',
             // send all mails to a file by default.
+
             'useFileTransport' => true,
         ],
         'log' => [

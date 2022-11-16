@@ -1,11 +1,11 @@
 <?php
 
 /** @var yii\web\View $this */
-/** @var yii\bootstrap5\ActiveForm $form */
+/** @var yii\bootstrap4\ActiveForm $form */
 /** @var app\models\LoginForm $model */
 
-use yii\bootstrap5\ActiveForm;
-use yii\bootstrap5\Html;
+use yii\bootstrap4\ActiveForm;
+use yii\bootstrap4\Html;
 use yii\helpers\ArrayHelper;
 
 
@@ -16,7 +16,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>У вас еще нет аккаунта?</p>     <input class="btn btn-primary" id="click-to-hide-2" type="button" value="Зарегистрироваться">
-
 
     <?php $form = ActiveForm::begin([
         'id' => 'login-form',
@@ -49,8 +48,6 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
 
     <?php ActiveForm::end(); ?>
-
-
 </div>
 <style>
     .hide-element {display: none ;}

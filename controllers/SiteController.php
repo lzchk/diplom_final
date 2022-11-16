@@ -3,9 +3,13 @@
 namespace app\controllers;
 
 use Codeception\Constraint\Page;
-use Yii;
-use yii\filters\AccessControl;
 use yii\helpers\VarDumper;
+use app\models\Calendar;
+use app\models\Schedule;
+use app\models\Work;
+use Yii;
+use yii\db\Expression;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
@@ -62,7 +66,6 @@ class SiteController extends Controller
         ];
     }
 
-
     public function actionSignup(){
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -104,7 +107,6 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-
         return $this->render('index');
     }
 
@@ -206,5 +208,25 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+
+    public function actionProfile()
+    {
+        $schedule = Schedule::find()->where(['speciality_id' => 1] )->andWhere(['date' => new Expression('CURDATE()')])->all();
+        $calendarString = Calendar::getMonth(date('n'), date('Y'), Calendar::$events);
+        $monthArr = Calendar::$months;
+        $deadlineWork = Work::find()->where('date_by > NOW()')->orderBy("date_by")->one();
+        $weekArr = Calendar::$week;
+        $dayOfTheWeek = Calendar::$week[date('w')];
+        $dayOfTheMonth = Calendar::$months[date('m')];
+        //date("Y-m-d")
+        return $this->render('profile', [
+            'calendarString' => $calendarString,
+            'schedule' => $schedule,
+            'month' => $monthArr,
+            'dayOfTheWeek' => $dayOfTheWeek,
+            'dayOfTheMonth' => $dayOfTheMonth,
+            'deadlineWork' => $deadlineWork
+        ]);
     }
 }

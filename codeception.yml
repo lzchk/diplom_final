@@ -2,7 +2,9 @@ actor: Tester
 bootstrap: _bootstrap.php
 paths:
     tests: tests
-    output: tests/_output
+
+    log: tests/_output
+
     data: tests/_data
     helpers: tests/_support
 settings:

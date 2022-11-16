@@ -20,6 +20,7 @@ class LoginFormTest extends \Codeception\Test\Unit
             'password' => 'not_existing_password',
         ]);
 
+
         verify($this->model->login())->false();
         verify(\Yii::$app->user->isGuest)->true();
     }
